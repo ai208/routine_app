@@ -1,4 +1,6 @@
 from  dataclasses import dataclass,field
+from datetime import date
+from .routine import RoutineModel
 @dataclass
 class UserModel:
     username :str

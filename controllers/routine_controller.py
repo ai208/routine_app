@@ -1,6 +1,9 @@
+import uuid
+from models.routine import RoutineModel
+from services.routine_service import Routine_Service
 # データを保存しておく　データの中身の変更はしない　更新するだけ
 class RoutineController: #操作だけをする　Service に送る
-    def __init__(self,app_model,service): # model とサービスにつながっている
+    def __init__(self,app_model,service:Routine_Service): # model とサービスにつながっている
         super().__init__()
         self.app = app_model
         self.service = service

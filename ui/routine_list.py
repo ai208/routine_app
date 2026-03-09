@@ -1,12 +1,16 @@
-#RoutineList UIの箱 入力を受け取る　→　コントローラーに伝える
+import flet as ft
+from .routine_item import RoutineItem
+from models.user import UserModel
+#RoutineList UIの箱 入力を受け取る　→　コントローラーに伝える 変更あり　userを使う
 @ft.control
 class RoutineView(ft.Column):
-    def __init__(self,controller):
+    def __init__(self,controller,user:UserModel):
         super().__init__()
         # self.controller = RoutineController() 作らない　受け取る　依存関係　アプリから受け取る
         self.controller = controller
-        done = self.controller.count_done()
-        total = self.controller.count_total_task()
+        self.user = user # routine をもつ
+        done = self.controller.service.count_done()
+        total = self.controller.service.count_total_task()
         self.status = ft.Text(value= f'本日の完了タスク : {done} /{total}') # UIなので、ここに置く　計算はコントローラー
         self.new_routine = ft.TextField(hint_text="タスクを入力してください。")
         self.button = ft.FloatingActionButton(icon=ft.Icons.ADD,on_click=self._add_clicked)
@@ -27,7 +31,7 @@ class RoutineView(ft.Column):
             self.refresh()
     def refresh(self):
         self.list.controls.clear()
-        for r in self.controller.get_routines(): # values は? dict のkey:value こっちを取る
+        for r in self.user.routines: # values は? dict のkey:value こっちを取る
             item = RoutineItem(
                 routine= r,
                 on_delete= self.on_delete,
@@ -35,8 +39,8 @@ class RoutineView(ft.Column):
 
             )
             self.list.controls.append(item)
-        done = self.controller.count_done()
-        total = self.controller.count_total_task()
+        done = self.controller.service.count_done()
+        total = self.controller.service.count_total_task()
         self.status.value = f'本日の完了タスク : {done} /{total}' #こうしないと更新されない
     #コントローラーを変化する
     def on_delete(self,routine):

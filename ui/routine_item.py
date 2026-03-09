@@ -1,8 +1,10 @@
+import flet as ft
+
 #Routine item UIの最小単位
 @ft.control
 class RoutineItem(ft.Row):
     # 名前と完了　(それを変更するコールバック関数)
-    def __init__(self,routine,on_delete,on_toggle):
+    def __init__(self,routine,on_delete,on_toggle): #変更なし
         super().__init__()
         # self.name = name
         # self.done = done

@@ -1,3 +1,4 @@
+from models.user import UserModel
 #アプリの状態 のみにする
 class AppModel:
     def __init__(self,repository): # dataclass で引数を取る方法

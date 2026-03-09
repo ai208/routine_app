@@ -1,3 +1,7 @@
+import json
+from datetime import date
+from models.user import UserModel
+from models.routine import RoutineModel
 #データの保存専門
 class JsonStorage:
     def __init__(self,filename :str):
@@ -30,7 +34,7 @@ class JsonStorage:
             "last_login":user.last_login.isoformat() if user.last_login else None,
             "routines":routines
         }
-    def dict_to_user(self,data): #読み取り
+    def dict_to_user(self,data): #読み取り dict にしたものをclassに変換する
         routines = []
         for r in data["routines"]:
             routines.append(
